@@ -1,0 +1,7 @@
+name: MysticPlaceholderAPI
+version: 1.0
+main: de.fynn.mystic.mysticplaceholderapi.MysticPlaceholderAPI
+api-version: 1.16
+prefix: MysticPlaceholderAPI
+load: STARTUP
+authors: [ Fynn ]
