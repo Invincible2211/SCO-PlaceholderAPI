@@ -10,20 +10,34 @@ import java.util.List;
 public class PlaceholderAPI {
 
     private PlaceholderManager placeholderManager = MysticPlaceholderAPI.getPlaceholderManager();
+    private static PlaceholderAPI placeholderAPI;
 
-    public String replacePlaceholder(Player target, String input){
-        List<String> identifier = getIdentifiers(input);
+    {
+        placeholderAPI = this;
+    }
+
+    public String replacePlaceholder(Player target, String message){
+        List<String> identifier = getIdentifiers(message);
         for (String s:
              identifier) {
-            input.replaceAll(s,"");
-            placeholderManager.replacePlaceholder(s,target,input);
+            message = message.replaceAll(s,"");
+            message = placeholderManager.replacePlaceholder(s,target, message);
         }
-
-        return null;
+        return message;
     }
 
     private List<String> getIdentifiers(String message){
+        List<String> availableIdentifier = placeholderManager.getAvailableIdentifiers();
+        List<String> usedIdentifiers = new ArrayList<>();
+        for (String s:
+             availableIdentifier) {
+            if (message.contains(s))usedIdentifiers.add(s);
+        }
+        return usedIdentifiers;
+    }
 
+    public static PlaceholderAPI getPlaceholderAPIInstance() {
+        return placeholderAPI;
     }
 
 }

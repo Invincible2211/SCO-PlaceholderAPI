@@ -43,9 +43,13 @@ public class PlaceholderManager {
 
     public String replacePlaceholder(String identifier, Player player, String message){
         List<Placeholder> usedPlaceholders = locatePlaceholders(placeholders.get(identifier),message);
-        for (Placeholder p:
-             usedPlaceholders) {
-            message = p.getPlaceholder(player, message);
+        try {
+            for (Placeholder p:
+                    usedPlaceholders) {
+                message = p.getPlaceholder(player, message);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return message;
     }
@@ -66,7 +70,7 @@ public class PlaceholderManager {
     }
 
     public List<String> getAvailableIdentifiers(){
-
+        return new ArrayList<>(placeholders.keySet());
     }
 
 }

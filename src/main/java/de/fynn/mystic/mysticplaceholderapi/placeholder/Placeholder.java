@@ -11,7 +11,7 @@ public abstract class Placeholder {
 
     private final List<String> placeholders;
 
-    Placeholder(String... placeholders){
+    public Placeholder(String... placeholders){
         this.placeholders = Arrays.asList(placeholders);
     }
 
@@ -20,10 +20,5 @@ public abstract class Placeholder {
     protected List<String> getPlaceholders(){
         return placeholders;
     }
-
-    /**
-     *  Bsp. Identifier: *Guild*
-     *  *Guild*%player_name%
-     */
 
 }
