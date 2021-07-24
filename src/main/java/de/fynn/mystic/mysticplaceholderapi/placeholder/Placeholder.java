@@ -1,7 +1,29 @@
 package de.fynn.mystic.mysticplaceholderapi.placeholder;
 
-public interface Placeholder {
+import de.fynn.mystic.mysticplaceholderapi.utils.PlaceholderHook;
+import org.bukkit.entity.Player;
 
-    <T> String getPlaceholder(T... values);
+import java.util.Arrays;
+import java.util.List;
+
+@PlaceholderHook
+public abstract class Placeholder {
+
+    private final List<String> placeholders;
+
+    Placeholder(String... placeholders){
+        this.placeholders = Arrays.asList(placeholders);
+    }
+
+    public abstract String getPlaceholder(Player player, String message);
+
+    protected List<String> getPlaceholders(){
+        return placeholders;
+    }
+
+    /**
+     *  Bsp. Identifier: *Guild*
+     *  *Guild*%player_name%
+     */
 
 }
