@@ -11,7 +11,7 @@ public abstract class Placeholder {
 
     private final List<String> placeholders;
 
-    public Placeholder(String... placeholders){
+    public Placeholder(String[] placeholders){
         this.placeholders = Arrays.asList(placeholders);
     }
 

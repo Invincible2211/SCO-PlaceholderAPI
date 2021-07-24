@@ -22,6 +22,7 @@ public class PlaceholderManager {
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
+        System.out.println(placeholders.size());
     }
 
     private HashMap<String,HashMap<List<String>,Placeholder>> convertClassFiles(HashMap<String,List<Class<Placeholder>>> classHashmap) throws IllegalAccessException, InstantiationException {
