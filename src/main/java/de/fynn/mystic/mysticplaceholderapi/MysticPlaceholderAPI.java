@@ -1,5 +1,7 @@
 package de.fynn.mystic.mysticplaceholderapi;
 
+import de.fynn.mystic.mysticplaceholderapi.api.PlaceholderAPI;
+import de.fynn.mystic.mysticplaceholderapi.eventListener.MessagePacketListener;
 import de.fynn.mystic.mysticplaceholderapi.placeholder.Placeholder;
 import de.fynn.mystic.mysticplaceholderapi.placeholder.PlaceholderManager;
 import org.bukkit.entity.Player;
@@ -14,9 +16,9 @@ public final class MysticPlaceholderAPI extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getLogger().info("Enabling MysticPlaceholderAPI");
-        placeholderManager = new PlaceholderManager(this);
-        init();
+        placeholderManager = new PlaceholderManager();
+        new PlaceholderAPI();
+        new MessagePacketListener(this);
     }
 
     @Override
@@ -24,24 +26,8 @@ public final class MysticPlaceholderAPI extends JavaPlugin {
 
     }
 
-    private void init(){
-        placeholderManager.registerPlaceholder("%player_name%", new Placeholder() {
-            @Override
-            public <T> String getPlaceholder(T... values) {
-                return ((Player)values[0]).getDisplayName();
-            }
-        });
-        placeholderManager.registerPlaceholder("%time%", new Placeholder() {
-            @Override
-            public <T> String getPlaceholder(T... values) {
-                SimpleDateFormat format = new SimpleDateFormat("hh:mm");
-                return format.format(new Date());
-            }
-        });
-    }
-
-    public static <T> String getDefaultPlaceholder(String msg,T... values){
-        return placeholderManager.getPlaceholder(msg,values);
+    public static PlaceholderManager getPlaceholderManager() {
+        return placeholderManager;
     }
 
 }
