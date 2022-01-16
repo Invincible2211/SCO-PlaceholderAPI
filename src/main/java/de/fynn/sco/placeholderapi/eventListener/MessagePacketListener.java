@@ -1,4 +1,4 @@
-package de.fynn.mystic.mysticplaceholderapi.eventListener;
+package de.fynn.sco.placeholderapi.eventListener;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -7,22 +7,21 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import de.fynn.mystic.mysticplaceholderapi.MysticPlaceholderAPI;
-import de.fynn.mystic.mysticplaceholderapi.api.PlaceholderAPI;
+import de.fynn.sco.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class MessagePacketListener {
 
-    private PlaceholderAPI api = PlaceholderAPI.getPlaceholderAPIInstance();
+    private de.fynn.sco.placeholderapi.api.PlaceholderAPI api = de.fynn.sco.placeholderapi.api.PlaceholderAPI.getPlaceholderAPIInstance();
 
-    public MessagePacketListener(MysticPlaceholderAPI mysticPlaceholderAPI){
-        setup(mysticPlaceholderAPI);
+    public MessagePacketListener(PlaceholderAPI placeholderAPI){
+        setup(placeholderAPI);
     }
 
-    public void setup(MysticPlaceholderAPI mysticPlaceholderAPI){
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(mysticPlaceholderAPI, ListenerPriority.NORMAL, PacketType.Play.Server.CHAT) {
+    public void setup(PlaceholderAPI placeholderAPI){
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(placeholderAPI, ListenerPriority.NORMAL, PacketType.Play.Server.CHAT) {
 
             @Override
             public void onPacketSending(PacketEvent event) {

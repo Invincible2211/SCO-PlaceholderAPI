@@ -1,4 +1,4 @@
-package de.fynn.mystic.mysticplaceholderapi.placeholder;
+package de.fynn.sco.placeholderapi.placeholder;
 
 import org.bukkit.entity.Player;
 

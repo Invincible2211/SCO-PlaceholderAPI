@@ -1,7 +1,7 @@
-package de.fynn.mystic.mysticplaceholderapi.utils;
+package de.fynn.sco.placeholderapi.utils;
 
 
-import de.fynn.mystic.mysticplaceholderapi.placeholder.Placeholder;
+import de.fynn.sco.placeholderapi.placeholder.Placeholder;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

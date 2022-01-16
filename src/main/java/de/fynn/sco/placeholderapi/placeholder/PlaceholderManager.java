@@ -1,6 +1,6 @@
-package de.fynn.mystic.mysticplaceholderapi.placeholder;
+package de.fynn.sco.placeholderapi.placeholder;
 
-import de.fynn.mystic.mysticplaceholderapi.utils.AnnotationController;
+import de.fynn.sco.placeholderapi.utils.AnnotationController;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

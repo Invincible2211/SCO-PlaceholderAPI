@@ -1,4 +1,4 @@
-package de.fynn.mystic.mysticplaceholderapi.utils;
+package de.fynn.sco.placeholderapi.utils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

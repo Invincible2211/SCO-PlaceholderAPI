@@ -1,7 +1,6 @@
-package de.fynn.mystic.mysticplaceholderapi.api;
+package de.fynn.sco.placeholderapi.api;
 
-import de.fynn.mystic.mysticplaceholderapi.MysticPlaceholderAPI;
-import de.fynn.mystic.mysticplaceholderapi.placeholder.PlaceholderManager;
+import de.fynn.sco.placeholderapi.placeholder.PlaceholderManager;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class PlaceholderAPI {
 
-    private PlaceholderManager placeholderManager = MysticPlaceholderAPI.getPlaceholderManager();
+    private PlaceholderManager placeholderManager = de.fynn.sco.placeholderapi.PlaceholderAPI.getPlaceholderManager();
     private static PlaceholderAPI placeholderAPI;
 
     {
