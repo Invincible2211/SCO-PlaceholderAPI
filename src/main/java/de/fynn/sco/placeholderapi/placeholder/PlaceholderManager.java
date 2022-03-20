@@ -1,77 +1,72 @@
 package de.fynn.sco.placeholderapi.placeholder;
 
-import de.fynn.sco.placeholderapi.utils.AnnotationController;
+import de.fynn.sco.placeholderapi.eventListener.MessagePacketListener;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
+/**
+ * @author Freddyblitz
+ * @version 1.0
+ */
 public class PlaceholderManager {
 
-    private static HashMap<String,HashMap<List<String>,Placeholder>> placeholders;
+    /*----------------------------------------------ATTRIBUTE---------------------------------------------------------*/
 
-    {
-        loadPlaceholders();
+    private static final PlaceholderManager instance = new PlaceholderManager();
+
+    private final HashMap<String, Placeholder> placeholderHashMap = new HashMap<>();
+
+    /*--------------------------------------------KONSTRUKTOREN-------------------------------------------------------*/
+
+    /**
+     * Der Konstruktor erstellt eine neue Instanz des MessagePacketListeners, welche fuer das automatische Ersetzen
+     * von Placeholdern in Nachrichten verwendet wird
+     */
+    private PlaceholderManager (){
+        new MessagePacketListener();
     }
 
-    private void loadPlaceholders(){
-        AnnotationController controller = new AnnotationController();
-        try {
-            placeholders = convertClassFiles(controller.getPlaceholderClasses());
-        } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
+    /*----------------------------------------------METHODEN----------------------------------------------------------*/
+
+    /**
+     * Diese Methode fuegt der API einen neuen Placeholder hinzu.
+     * @param placeholder Der Placeholder der hinzugefuegt werden soll
+     * @return Wahrheitswert, ob der Placeholder hinzugefuegt werden konnte;
+     * -> true wenn der Placeholder hinzugefuegt werden konnte
+     * -> false wenn der Placeholder schon registriert wurde
+     */
+    public boolean addPlaceholder(Placeholder placeholder){
+        if (placeholderHashMap.containsKey(placeholder.getIdentifier())){
+            return false;
+        } else {
+            placeholderHashMap.put(placeholder.getIdentifier(), placeholder);
+            return true;
         }
-        System.out.println(placeholders.size());
     }
 
-    private HashMap<String,HashMap<List<String>,Placeholder>> convertClassFiles(HashMap<String,List<Class<Placeholder>>> classHashmap) throws IllegalAccessException, InstantiationException {
-        HashMap<String, HashMap<List<String>, Placeholder>> castedClasses = new HashMap<>();
-        List<String> keys = new ArrayList<>(classHashmap.keySet());
-        for (int i = 0; i < classHashmap.size(); i++) {
-            HashMap<List<String>, Placeholder> listPlaceholderHashMap = new HashMap<>();
-            List<Class<Placeholder>> placeholderClassList = classHashmap.get(keys.get(i));
-            for (Class<Placeholder> cls :
-                    placeholderClassList) {
-                Placeholder placeholder = cls.newInstance();
-                List<String> placeholderList = placeholder.getPlaceholders();
-                listPlaceholderHashMap.put(placeholderList, placeholder);
+    /**
+     * Diese Methode ersetzt alle Placeholder in einem String.
+     * @param player Optional: Ein Spieler, der benoetigt wird, um die Placeholder zu ersetzen
+     * @param message Der String, in der die Placeholder ersetzt werden sollen
+     * @return Den uebergebenen String mit ersetzten Placeholdern
+     */
+    public String replacePlaceholder(Player player, String message){
+        Collection<String> identifierList = placeholderHashMap.keySet();
+        for (String placeholder:
+             identifierList) {
+            if (message.contains(placeholder)){
+                message = message.replaceAll(placeholder, this.placeholderHashMap.get(placeholder).getPlaceholder(player));
             }
-            castedClasses.put("*"+keys.get(i)+"*", listPlaceholderHashMap);
-        }
-        return castedClasses;
-    }
-
-    public String replacePlaceholder(String identifier, Player player, String message){
-        List<Placeholder> usedPlaceholders = locatePlaceholders(placeholders.get(identifier),message);
-        try {
-            for (Placeholder p:
-                    usedPlaceholders) {
-                message = p.getPlaceholder(player, message);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return message;
     }
 
-    private List<Placeholder> locatePlaceholders(HashMap<List<String>,Placeholder> data, String message){
-        List<Placeholder> locatedPlaceholders = new ArrayList<>();
-        List<List<String>> keyList =  new ArrayList<>(data.keySet());
-        for (List<String> placeholderList:
-             keyList) {
-            for (String placeolder:
-                 placeholderList) {
-                if(message.contains(placeolder)){
-                    locatedPlaceholders.add(data.get(placeholderList));
-                }
-            }
-        }
-        return locatedPlaceholders;
-    }
+    /*-----------------------------------------GETTER AND SETTER------------------------------------------------------*/
 
-    public List<String> getAvailableIdentifiers(){
-        return new ArrayList<>(placeholders.keySet());
+    protected static PlaceholderManager getInstance() {
+        return instance;
     }
 
 }

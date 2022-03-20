@@ -7,21 +7,35 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import de.fynn.sco.placeholderapi.PlaceholderAPI;
+import de.fynn.sco.placeholderapi.PlaceholderAPIPlugin;
+import de.fynn.sco.placeholderapi.placeholder.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * @author Freddyblitz
+ * @version 1.0
+ */
 public class MessagePacketListener {
 
-    private de.fynn.sco.placeholderapi.api.PlaceholderAPI api = de.fynn.sco.placeholderapi.api.PlaceholderAPI.getPlaceholderAPIInstance();
+    /*--------------------------------------------KONSTRUKTOREN-------------------------------------------------------*/
 
-    public MessagePacketListener(PlaceholderAPI placeholderAPI){
-        setup(placeholderAPI);
+    /**
+     * Der Konstruktor fuehrt das Setup des MessageListeners aus.
+     */
+    public MessagePacketListener(){
+        setup();
     }
 
-    public void setup(PlaceholderAPI placeholderAPI){
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(placeholderAPI, ListenerPriority.NORMAL, PacketType.Play.Server.CHAT) {
+    /*----------------------------------------------METHODEN----------------------------------------------------------*/
+
+    /**
+     * Das Setup registriert einen PacketListener bei ProtocolLib um alle Chat Packets abzufangen und automatisch
+     * Placeholder zu ersetzen.
+     */
+    public void setup(){
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(PlaceholderAPIPlugin.getPlugin(), ListenerPriority.NORMAL, PacketType.Play.Server.CHAT) {
 
             @Override
             public void onPacketSending(PacketEvent event) {
@@ -33,7 +47,7 @@ public class MessagePacketListener {
                     List<WrappedChatComponent> components = packet.getChatComponents().getValues();
 
                     for (WrappedChatComponent component : components) {
-                        component.setJson(api.replacePlaceholder(player,component.getJson()));
+                        component.setJson(PlaceholderAPI.replacePlaceholder(player,component.getJson()));
                         packet.getChatComponents().write(components.indexOf(component), component);
                     }
 

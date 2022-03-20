@@ -1,7 +1,9 @@
 name: PlaceholderAPI
 version: 1.0
-main: de.fynn.mystic.mysticplaceholderapi.PlaceholderAPI
+main: de.fynn.sco.placeholderapi.PlaceholderAPIPlugin
 api-version: 1.16
 prefix: PlaceholderAPI
 load: STARTUP
 authors: [ Fynn ]
+depend:
+  - ProtocolLib

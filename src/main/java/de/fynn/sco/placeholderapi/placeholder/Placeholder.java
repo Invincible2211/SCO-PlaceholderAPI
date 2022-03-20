@@ -1,24 +1,42 @@
 package de.fynn.sco.placeholderapi.placeholder;
 
-import de.fynn.sco.placeholderapi.utils.PlaceholderHook;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.List;
-
-@PlaceholderHook
+/**
+ * @author Freddyblitz
+ * @version 1.0
+ */
 public abstract class Placeholder {
 
-    private final List<String> placeholders;
+    /*----------------------------------------------ATTRIBUTE---------------------------------------------------------*/
 
-    public Placeholder(String[] placeholders){
-        this.placeholders = Arrays.asList(placeholders);
+    private final String identifier;
+
+    /*--------------------------------------------KONSTRUKTOREN-------------------------------------------------------*/
+
+    /**
+     * Der Konstruktor benoetigt einen Identifier fuer den Placeholder, Bsp.: %player_name%.
+     * @param identifier Der Identifier des Placeholders
+     */
+    public Placeholder(String identifier){
+        this.identifier = identifier;
     }
 
-    public abstract String getPlaceholder(Player player, String message);
+    /*----------------------------------------------METHODEN----------------------------------------------------------*/
 
-    protected List<String> getPlaceholders(){
-        return placeholders;
+    /**
+     * Es muss eine getPlaceholder(Player) Methode implementiert werden, die, wenn der Identifier in einem String vorkommt
+     * zurueckgibt, durch was der Identifier ersetzt werden soll.
+     * @param player Der Spieler fuer den der Placeholder aufgerufen wird, kann aber auch null sein, wenn kein Spieler
+     *               uebergeben wird.
+     * @return Der String, der den Identifier ersetzt
+     */
+    public abstract String getPlaceholder(Player player);
+
+    /*-----------------------------------------GETTER AND SETTER------------------------------------------------------*/
+
+    public String getIdentifier() {
+        return identifier;
     }
 
 }
